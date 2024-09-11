@@ -1,15 +1,23 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-
 const app = express();
+const dotenv = require('dotenv');
+dotenv.config();
+
+const usuarioRoutes = require('./routes/usuarioRoutes');
+const grupoRoutes = require('./routes/grupoRoutes');
+const trilhaRoutes = require('./routes/trilhaRoutes');
+const avaliacaoRoutes = require('./routes/avaliacaoRoutes');
+const installRoutes = require('./routes/installRoutes');
+
+app.use(express.json());
+
+app.use('/usuarios', usuarioRoutes);
+app.use('/grupos', grupoRoutes);
+app.use('/trilhas', trilhaRoutes);
+app.use('/avaliacoes', avaliacaoRoutes);
+app.use('/install', installRoutes);
+
 const port = process.env.PORT || 3000;
-
-app.use(bodyParser.json());
-
-app.get('/', (req, res) => {
-    res.send('API funcionando!');
-});
-
 app.listen(port, () => {
     console.log(`Servidor rodando na porta ${port}`);
 });
