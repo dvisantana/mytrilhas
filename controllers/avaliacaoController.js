@@ -4,7 +4,7 @@ const { Avaliacao, Trilha, Usuario } = require('../models');
 exports.addAvaliacao = async (req, res) => {
   try {
     const { nota, comentario, trilhaId } = req.body;
-    const usuarioId = req.usuario.id; // Pega o ID do usuário autenticado
+    const usuarioId = req.userId; // Pega o ID do usuário autenticado
 
     // Verifica se a trilha existe
     const trilha = await Trilha.findByPk(trilhaId);

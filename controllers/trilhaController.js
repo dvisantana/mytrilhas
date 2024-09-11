@@ -3,7 +3,8 @@ const { Trilha, Avaliacao } = require('../models');
 // Criar uma nova trilha
 exports.createTrilha = async (req, res) => {
   try {
-    const { nome, local, tipo, dificuldade, usuarioId } = req.body;
+    const { nome, local, tipo, dificuldade } = req.body;
+    const usuarioId = req.userId;
     const trilha = await Trilha.create({ nome, local, tipo, dificuldade, usuarioId });
     res.status(201).json(trilha);
   } catch (err) {
@@ -75,26 +76,31 @@ exports.deleteTrilha = async (req, res) => {
   }
 };
 
-exports.getTrilhaWithAvaliacoes = async (trilhaId) => {
+// Obter uma trilha e suas avaliações
+exports.getTrilhaWithAvaliacoes = async (req, res) => {
   try {
+    const { id } = req.params;
+
+    // Procurar a trilha pelo ID e incluir as avaliações relacionadas
     const trilha = await Trilha.findOne({
-      where: { id: trilhaId },
+      where: { id: id },
       include: [
         {
           model: Avaliacao,
-          as: 'avaliacoes', // Certifique-se de que o alias corresponde ao definido no modelo
-          attributes: ['nota', 'comentario'] // Inclua os atributos que você deseja
+          as: 'avaliacoes', // Alias que corresponde ao modelo Avaliacao
+          attributes: ['nota', 'comentario'] // Especifique os atributos a serem retornados
         }
       ]
     });
 
+    // Verificar se a trilha foi encontrada
     if (!trilha) {
-      throw new Error('Trilha não encontrada');
+      return res.status(404).json({ error: 'Trilha não encontrada' });
     }
 
-    return trilha;
-  } catch (error) {
-    console.error('Erro ao buscar trilha com avaliações:', error);
-    throw error;
+    // Retornar a trilha com suas avaliações
+    res.status(200).json(trilha);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao buscar trilha e avaliações', details: err.message });
   }
 };

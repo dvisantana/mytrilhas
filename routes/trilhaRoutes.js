@@ -19,14 +19,7 @@ router.put('/:id', auth, trilhaController.updateTrilha);
 // Excluir uma trilha
 router.delete('/:id', auth, trilhaController.deleteTrilha);
 
-
-router.get('/trilhas/:id', async (req, res) => {
-  try {
-    const trilha = await trilhaController.getTrilhaWithAvaliacoes(req.params.id);
-    res.json(trilha);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// Buscar por todas avaliacoes da uma trilha especifica
+router.get('/:id/avaliacoes', trilhaController.getTrilhaWithAvaliacoes);
 
 module.exports = router;

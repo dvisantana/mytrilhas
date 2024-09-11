@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     Trilha.belongsTo(models.Usuario, { foreignKey: 'usuarioId', as: 'criador' });
 
     // Uma trilha pode ter várias avaliações
-    Trilha.hasMany(models.Avaliacao, { foreignKey: 'trilhaId' });
+    Trilha.hasMany(models.Avaliacao, { foreignKey: 'trilhaId', as: 'avaliacoes' });
   };
   
   return Trilha;
