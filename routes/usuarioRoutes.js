@@ -49,6 +49,64 @@ router.post('/register', usuarioController.createUsuario);
 
 /**
  * @swagger
+ * /usuarios:
+ *   get:
+ *     summary: Retorna a lista de todos os usuários
+ *     tags: [Usuários]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de usuários retornada com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Usuario'
+ *       403:
+ *         description: Acesso negado (somente administradores)
+ *       500:
+ *         description: Erro ao buscar usuários
+ */
+// Rota para obter todos os usuários
+router.get('/', auth, authAdmin, usuarioController.getUsuarios);
+
+
+/**
+ * @swagger
+ * /usuarios/{id}:
+ *   get:
+ *     summary: Retorna um usuário por ID
+ *     tags: [Usuários]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID do usuário
+ *     responses:
+ *       200:
+ *         description: Usuário retornado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Usuario'
+ *       404:
+ *         description: Usuário não encontrado
+ *       403:
+ *         description: Acesso negado (somente administradores)
+ *       500:
+ *         description: Erro ao buscar usuário
+ */
+// Rota para obter um usuário por ID
+router.get('/:id', auth, authAdmin, usuarioController.getUsuarioById);
+
+/**
+ * @swagger
  * /usuarios/login:
  *   post:
  *     summary: Login de usuário
