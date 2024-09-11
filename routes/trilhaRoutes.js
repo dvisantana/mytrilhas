@@ -223,4 +223,7 @@ router.delete('/:id', auth, trilhaController.deleteTrilha);
 // Buscar por todas avaliacoes da uma trilha especifica
 router.get('/:id/avaliacoes', trilhaController.getTrilhaWithAvaliacoes);
 
+// Adicionado durante a avaliação do professor
+router.get('/tipo/:tipo', trilhaController.getTrilhaByTipo);
+
 module.exports = router;

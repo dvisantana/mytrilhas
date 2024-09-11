@@ -1,4 +1,6 @@
 const { Trilha, Avaliacao } = require('../models');
+const { Sequelize } = require('sequelize');
+
 
 // Criar uma nova trilha
 exports.createTrilha = async (req, res) => {
@@ -102,5 +104,30 @@ exports.getTrilhaWithAvaliacoes = async (req, res) => {
     res.status(200).json(trilha);
   } catch (err) {
     res.status(500).json({ error: 'Erro ao buscar trilha e avaliações', details: err.message });
+  }
+};
+
+// Obter uma trilha de um determinado tipo
+exports.getTrilhaByTipo = async (req, res) => {
+  try {
+    const order = ['Fácil', 'Médio', 'Difícil', 'Perigosa'];
+    const { tipo } = req.params;
+
+    const trilha = await Trilha.findAll({
+      where: { tipo: tipo },
+      order: [
+        [Sequelize.literal(`FIELD(dificuldade, '${order.join("','")}')`)]
+      ]
+    });
+
+    // Verificar se a trilha foi encontrada
+    if (!trilha) {
+      return res.status(404).json({ error: 'Trilha não encontrada' });
+    }
+
+    // Retornar a trilha
+    res.status(200).json(trilha);
+  } catch (err) {
+    res.status(500).json({ error: 'Erro ao buscar trilha com o tipo informado', details: err.message });
   }
 };

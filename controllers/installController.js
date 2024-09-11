@@ -20,10 +20,16 @@ exports.installDatabase = async (req, res) => {
 
     await Trilha.bulkCreate([
       { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' },
-      { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' },
-      { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' },
-      { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' },
-      { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' }
+      { nome: 'Lagoa', local: 'Cornelio Procopio', tipo: 'Banho', dificuldade: 'Médio' },
+      { nome: 'Lago Igapó', local: 'Londrina', tipo: 'Banho', dificuldade: 'Médio' },
+      { nome: 'Jardim Botanico', local: 'Curitiba', tipo: 'Caminhada', dificuldade: 'Fácil' },
+      { nome: 'Pedreiras', local: 'Ourinhos', tipo: 'Caminhada', dificuldade: 'Difícil' },
+      { nome: 'Jalapao', local: 'Porto Velho', tipo: 'Banho', dificuldade: 'Perigosa' },
+      { nome: 'Pantanal', local: 'Corumba', tipo: 'Bicicleta', dificuldade: 'Fácil' },
+      { nome: 'Lagoa Gigante', local: 'Itu', tipo: 'Banho', dificuldade: 'Fácil' },
+      { nome: 'Minero', local: 'Vespasiano', tipo: 'Moto', dificuldade: 'Difícil' },
+      { nome: 'Arena MRV', local: 'Belo Horizonte', tipo: 'Moto', dificuldade: 'Fácil' },
+      { nome: 'Lagoa', local: 'Lagoa Santa', tipo: 'Banho', dificuldade: 'Fácil' },
     ]);
 
     await Avaliacao.bulkCreate([
