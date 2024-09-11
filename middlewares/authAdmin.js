@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     // Verifica se o usuário está autenticado e é um administrador
     const usuario = await Usuario.findByPk(usuarioId);
     
-    if (!usuario || usuario.role !== 'admin') {
+    if (!usuario || usuario.tipo !== 'admin') {
       return res.status(403).json({ error: 'Acesso negado. Apenas administradores podem acessar.' });
     }
     

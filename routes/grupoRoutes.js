@@ -8,10 +8,10 @@ const authAdmin = require('../middlewares/authAdmin');
 router.post('/', auth, authAdmin, grupoController.createGrupo);
 
 // Listar todos os grupos
-router.get('/', auth, grupoController.getGrupos);
+router.get('/', grupoController.getGrupos);
 
 // Obter detalhes de um grupo específico
-router.get('/:id', auth, grupoController.getGrupoById);
+router.get('/:id', grupoController.getGrupoById);
 
 // Atualizar um grupo
 router.put('/:id', auth, authAdmin, grupoController.updateGrupo);

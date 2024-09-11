@@ -3,6 +3,6 @@ const router = express.Router();
 const installController = require('../controllers/installController');
 
 // Rota para instalar o banco de dados
-router.get('/install', installController.installDatabase);
+router.get('/', installController.installDatabase);
 
 module.exports = router;

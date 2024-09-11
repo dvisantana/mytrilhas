@@ -7,10 +7,10 @@ const auth = require('../middlewares/auth');
 router.post('/', auth, trilhaController.createTrilha);
 
 // Listar todas as trilhas
-router.get('/', auth, trilhaController.getTrilhas);
+router.get('/', trilhaController.getTrilhas);
 
 // Obter detalhes de uma trilha específica
-router.get('/:id', auth, trilhaController.getTrilhaById);
+router.get('/:id', trilhaController.getTrilhaById);
 
 // Atualizar uma trilha
 router.put('/:id', auth, trilhaController.updateTrilha);

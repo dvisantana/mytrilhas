@@ -1,15 +1,50 @@
+const bcrypt = require('bcrypt');
 const { Usuario } = require('../models');
+const { generateToken } = require('../utils/jwt');
+
+// Função para realizar o login
+exports.login = async (req, res) => {
+    try {
+      const { username, senha } = req.body;
+  
+      // Verifica se o usuário existe no banco de dados
+      const usuario = await Usuario.findOne({ where: { username } });
+      if (!usuario) {
+        return res.status(404).json({ error: 'Usuário não encontrado.' });
+      }
+  
+      // Verifica se a senha está correta
+      const isMatch = await bcrypt.compare(senha, usuario.senha);
+      if (!isMatch) {
+        return res.status(400).json({ error: 'Senha incorreta.' });
+      }
+  
+      // Gera o token JWT para o usuário
+      const token = generateToken(usuario.id);
+  
+      res.status(200).json({ token, usuarioId: usuario.id });
+    } catch (err) {
+      res.status(500).json({ error: 'Erro ao realizar login', details: err.message });
+    }
+  };
 
 // Criar um novo usuário normal
 exports.createUsuario = async (req, res) => {
   try {
     const { nome, username, senha } = req.body;
 
+    // Verifica se o usuario já existe
+    const existingUser = await Usuario.findOne({ where: { username } });
+    if (existingUser) return res.status(400).json({ error: 'Usuário já registrado.' });
+
+    // Criptografa a senha
+    const hashedPassword = await bcrypt.hash(senha, 10);
+
     // Cria um usuário normal (tipo: 'usuario')
     const usuario = await Usuario.create({
       nome,
       username,
-      senha,
+      senha: hashedPassword,
       tipo: 'usuario'  // Definindo o papel como "usuario"
     });
 
@@ -24,11 +59,18 @@ exports.createAdmin = async (req, res) => {
   try {
     const { nome, username, senha } = req.body;
 
+    // Verifica se o usuario já existe
+    const existingUser = await Usuario.findOne({ where: { username } });
+    if (existingUser) return res.status(400).json({ error: 'Usuário já registrado.' });
+
+    // Criptografa a senha
+    const hashedPassword = await bcrypt.hash(senha, 10);
+
     // Cria um administrador (tipo: 'admin')
     const admin = await Usuario.create({
       nome,
       username,
-      senha,
+      senha: hashedPassword,
       tipo: 'admin'  // Definindo o papel como "admin"
     });
 
@@ -37,7 +79,6 @@ exports.createAdmin = async (req, res) => {
     res.status(400).json({ error: 'Erro ao criar administrador', details: err.message });
   }
 };
-
 
 // Obter todos os usuários
 exports.getUsuarios = async (req, res) => {

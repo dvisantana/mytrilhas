@@ -2,7 +2,7 @@
   "name": "mytrilhas",
   "version": "1.0.0",
   "description": "Projeto final da material de Back-end",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

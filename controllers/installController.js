@@ -1,7 +1,9 @@
+const bcrypt = require('bcrypt');
 const { Usuario, Grupo, Trilha, Avaliacao } = require('../models');
 
 exports.installDatabase = async (req, res) => {
   try {
+    const hash = await bcrypt.hash('senha123', 10);
     // Criação das tabelas
     await Usuario.sync({ force: true });
     await Grupo.sync({ force: true });
@@ -10,11 +12,11 @@ exports.installDatabase = async (req, res) => {
 
     // Inserção de dados iniciais
     await Usuario.bulkCreate([
-      { nome: 'Usuario 1', username: 'usuario1@example.com', senha: 'senha123', role: 'admin' },
-      { nome: 'Usuario 2', username: 'usuario2@example.com', senha: 'senha123', role: 'usuario' },
-      { nome: 'Usuario 3', username: 'usuario3@example.com', senha: 'senha123', role: 'usuario' },
-      { nome: 'Usuario 4', username: 'usuario4@example.com', senha: 'senha123', role: 'usuario' },
-      { nome: 'Usuario 5', username: 'usuario5@example.com', senha: 'senha123', role: 'usuario' }
+      { nome: 'admin', username: 'admin', senha: hash, tipo: 'admin' },
+      { nome: 'Usuario 2', username: 'user2', senha: hash, tipo: 'usuario' },
+      { nome: 'Usuario 3', username: 'user3', senha: hash, tipo: 'usuario' },
+      { nome: 'Usuario 4', username: 'user4', senha: hash, tipo: 'usuario' },
+      { nome: 'Usuario 5', username: 'user5', senha: hash, tipo: 'usuario' }
     ]);
 
     await Grupo.bulkCreate([
@@ -26,11 +28,11 @@ exports.installDatabase = async (req, res) => {
     ]);
 
     await Trilha.bulkCreate([
-      { nome: 'Trilha 1', descricao: 'Descrição da Trilha 1' },
-      { nome: 'Trilha 2', descricao: 'Descrição da Trilha 2' },
-      { nome: 'Trilha 3', descricao: 'Descrição da Trilha 3' },
-      { nome: 'Trilha 4', descricao: 'Descrição da Trilha 4' },
-      { nome: 'Trilha 5', descricao: 'Descrição da Trilha 5' }
+      { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' },
+      { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' },
+      { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' },
+      { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' },
+      { nome: 'Cachoeira Marabá', local: 'Congoinhas', tipo: 'Banho', dificuldade: 'Fácil' }
     ]);
 
     await Avaliacao.bulkCreate([

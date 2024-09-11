@@ -3,8 +3,8 @@ const { Trilha } = require('../models');
 // Criar uma nova trilha
 exports.createTrilha = async (req, res) => {
   try {
-    const { nome, local, dificuldade, usuarioId } = req.body;
-    const trilha = await Trilha.create({ nome, local, dificuldade, usuarioId });
+    const { nome, local, tipo, dificuldade, usuarioId } = req.body;
+    const trilha = await Trilha.create({ nome, local, tipo, dificuldade, usuarioId });
     res.status(201).json(trilha);
   } catch (err) {
     res.status(400).json({ error: 'Erro ao criar trilha', details: err.message });

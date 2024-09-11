@@ -5,7 +5,7 @@ const auth = require('../middlewares/auth');
 const authAdmin = require('../middlewares/authAdmin');
 
 // Rota para registrar um usuário
-router.post('/register', usuarioController.register);
+router.post('/register', usuarioController.createUsuario);
 
 // Rota para login
 router.post('/login', usuarioController.login);
@@ -14,4 +14,3 @@ router.post('/login', usuarioController.login);
 router.post('/admins', auth, authAdmin, usuarioController.createAdmin);
 
 module.exports = router;
-    
