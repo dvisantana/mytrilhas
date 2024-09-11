@@ -110,7 +110,7 @@ exports.updateUsuario = async (req, res) => {
     const usuario = await Usuario.findByPk(id);
 
     if (!usuario) return res.status(404).json({ error: 'Usuário não encontrado' });
-    if (id != req.usuario.id && req.usuario.tipo !== 'admin') return res.status(403).json({ message: 'Permissão negada.' });
+    //if (id != req.usuario.id && req.usuario.tipo !== 'admin') return res.status(403).json({ message: 'Permissão negada.' });
 
     await usuario.update({ nome, username, senha, tipo });
     res.status(200).json(usuario);

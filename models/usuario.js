@@ -28,9 +28,6 @@ module.exports = (sequelize, DataTypes) => {
 
     // Um usuário pode fazer várias avaliações
     Usuario.hasMany(models.Avaliacao, { foreignKey: 'usuarioId' });
-
-    // Muitos para muitos: usuários podem fazer parte de vários grupos
-    Usuario.belongsToMany(models.Grupo, { through: 'UsuarioGrupo', foreignKey: 'usuarioId' });
   };
 
   return Usuario;

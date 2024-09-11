@@ -26,9 +26,6 @@ module.exports = (sequelize, DataTypes) => {
 
     // Uma trilha pode ter várias avaliações
     Trilha.hasMany(models.Avaliacao, { foreignKey: 'trilhaId' });
-
-    // Muitos para muitos: trilhas podem pertencer a vários grupos
-    Trilha.belongsToMany(models.Grupo, { through: 'TrilhaGrupo', foreignKey: 'trilhaId' });
   };
   
   return Trilha;

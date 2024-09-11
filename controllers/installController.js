@@ -1,12 +1,11 @@
 const bcrypt = require('bcrypt');
-const { Usuario, Grupo, Trilha, Avaliacao } = require('../models');
+const { Usuario, Trilha, Avaliacao } = require('../models');
 
 exports.installDatabase = async (req, res) => {
   try {
     const hash = await bcrypt.hash('senha123', 10);
     // Criação das tabelas
     await Usuario.sync({ force: true });
-    await Grupo.sync({ force: true });
     await Trilha.sync({ force: true });
     await Avaliacao.sync({ force: true });
 
@@ -17,14 +16,6 @@ exports.installDatabase = async (req, res) => {
       { nome: 'Usuario 3', username: 'user3', senha: hash, tipo: 'usuario' },
       { nome: 'Usuario 4', username: 'user4', senha: hash, tipo: 'usuario' },
       { nome: 'Usuario 5', username: 'user5', senha: hash, tipo: 'usuario' }
-    ]);
-
-    await Grupo.bulkCreate([
-      { nome: 'Grupo 1', descricao: 'Descrição do Grupo 1' },
-      { nome: 'Grupo 2', descricao: 'Descrição do Grupo 2' },
-      { nome: 'Grupo 3', descricao: 'Descrição do Grupo 3' },
-      { nome: 'Grupo 4', descricao: 'Descrição do Grupo 4' },
-      { nome: 'Grupo 5', descricao: 'Descrição do Grupo 5' }
     ]);
 
     await Trilha.bulkCreate([

@@ -1,4 +1,4 @@
-const { Trilha } = require('../models');
+const { Trilha, Avaliacao } = require('../models');
 
 // Criar uma nova trilha
 exports.createTrilha = async (req, res) => {
@@ -72,5 +72,29 @@ exports.deleteTrilha = async (req, res) => {
     res.status(204).send();
   } catch (err) {
     res.status(500).json({ error: 'Erro ao deletar trilha', details: err.message });
+  }
+};
+
+exports.getTrilhaWithAvaliacoes = async (trilhaId) => {
+  try {
+    const trilha = await Trilha.findOne({
+      where: { id: trilhaId },
+      include: [
+        {
+          model: Avaliacao,
+          as: 'avaliacoes', // Certifique-se de que o alias corresponde ao definido no modelo
+          attributes: ['nota', 'comentario'] // Inclua os atributos que você deseja
+        }
+      ]
+    });
+
+    if (!trilha) {
+      throw new Error('Trilha não encontrada');
+    }
+
+    return trilha;
+  } catch (error) {
+    console.error('Erro ao buscar trilha com avaliações:', error);
+    throw error;
   }
 };
