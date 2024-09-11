@@ -1,0 +1,14 @@
+{
+  "name": "mytrilhas",
+  "version": "1.0.0",
+  "description": "Projeto final da material de Back-end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Davi Santana",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.20.0"
+  }
+}
