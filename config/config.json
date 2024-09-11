@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "root",
+    "password": "galo1011",
+    "database": "mytrilhas",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
+}
