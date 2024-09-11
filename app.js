@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const dotenv = require('dotenv');
+const { swaggerUi, swaggerSpec } = require('./config/swagger');
 dotenv.config();
 
 const usuarioRoutes = require('./routes/usuarioRoutes');
@@ -10,6 +11,7 @@ const installRoutes = require('./routes/installRoutes');
 
 app.use(express.json());
 
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use('/usuarios', usuarioRoutes);
 app.use('/trilhas', trilhaRoutes);
 app.use('/avaliacoes', avaliacaoRoutes);
