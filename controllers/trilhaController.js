@@ -14,8 +14,21 @@ exports.createTrilha = async (req, res) => {
 // Obter todas as trilhas
 exports.getTrilhas = async (req, res) => {
   try {
-    const trilhas = await Trilha.findAll();
-    res.status(200).json(trilhas);
+    const limit = parseInt(req.query.limit) || 10; // Valor padrão 10
+    const page = parseInt(req.query.page) || 1; // Valor padrão 1
+
+    if (![5, 10, 30].includes(limit)) {
+      return res.status(400).json({ error: 'Limite deve ser 5, 10 ou 30.' });
+    }
+
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await Trilha.findAndCountAll({
+      limit,
+      offset
+    });
+
+    res.status(200).json({ trilhas: rows, total: count });
   } catch (err) {
     res.status(500).json({ error: 'Erro ao buscar trilhas', details: err.message });
   }
